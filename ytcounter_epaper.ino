@@ -25,10 +25,10 @@ U8G2_FOR_ADAFRUIT_GFX u8g2Fonts;
 static HTTPClient http;
 static int httpError;
 
-static const char *id = "UCgVdm83gOEld-KuN-LLHnRA";
-static const char *key = "AIzaSyC_411thR0bpVAK4kzW1Gpp8lYHdaviZU4"; 
-static const char *ssid = "PHXWIFIZIGGO";
-static const char *wifipass = "jH8Pymdxswzd";
+static const char *id = "<YT channel id>";
+static const char *key = "<YT api>"; 
+static const char *ssid = "ssid";
+static const char *wifipass = "wifi-password";
 
 static WiFiUDP ntpUDP;
 static NTPClient timeClient(ntpUDP);
