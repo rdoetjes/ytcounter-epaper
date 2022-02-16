@@ -76,9 +76,13 @@ static const char* rootca="-----BEGIN CERTIFICATE-----\n" \
 String getDateTime(NTPClient *ntp){
   ntp->begin();
   ntp->setTimeOffset(3600);
-  
+
+  int retry=0;
   while(!ntp->update()) {
     ntp->forceUpdate();
+    
+    if (retry>20) esp_deep_sleep_start(); 
+    delay(1000);
   }
 
   String dateTime = ntp->getFormattedDate();
