@@ -25,10 +25,10 @@ U8G2_FOR_ADAFRUIT_GFX u8g2Fonts;
 static HTTPClient http;
 static int httpError;
 
-static const char *id = "<YT channel id>";
-static const char *key = "<YT api>"; 
-static const char *ssid = "ssid";
-static const char *wifipass = "wifi-password";
+static const char *id = "your channle id";
+static const char *key = "your yt api key"; 
+static const char *ssid = "you ssid";
+static const char *wifipass = "your wifi password";
 
 static WiFiUDP ntpUDP;
 static NTPClient timeClient(ntpUDP);
@@ -105,6 +105,7 @@ void getNrSubscriptions(HTTPClient *http, int *httpError, Stats *stats, const ch
   
   static int count;
   String request = "https://www.googleapis.com/youtube/v3/channels?part=statistics&id="+String(id)+"&key="+String(key);
+  http->setTimeout(15000);
   http->begin(request.c_str(), rootca);
   (*httpError) = http->GET();
   
@@ -139,8 +140,11 @@ void print_wakeup_reason()
   }
 
   //Wait for Wifi to be reconnected
+  int retry=0;
   while (WiFi.status() != WL_CONNECTED){
     delay(500);
+    retry++;
+    if (retry>20) esp_deep_sleep_start();
   }  
   
   getNrSubscriptions(&http, &httpError, &myStats, id, key, rootca);
